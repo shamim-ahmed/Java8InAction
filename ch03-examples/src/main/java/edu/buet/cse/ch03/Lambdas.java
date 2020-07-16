@@ -16,6 +16,7 @@ public class Lambdas {
     List<Apple> greenApples =
         inventory.stream().filter(a -> a.getColor().equals("green")).collect(Collectors.toList());
     greenApples.forEach(System.out::println);
+
     System.out.println();
 
     // define a comparator using lambda

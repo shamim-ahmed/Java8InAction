@@ -3,15 +3,15 @@ package edu.buet.cse.ch03.model;
 import java.util.Objects;
 
 public class Apple {
-  private final int weight;
+  private final Integer weight;
   private final String color;
 
-  public Apple(int weight, String color) {
-    this.weight = weight;
+  public Apple(Integer weight, String color) {
+    this.weight = Objects.requireNonNull(weight);
     this.color = Objects.requireNonNull(color);
   }
 
-  public int getWeight() {
+  public Integer getWeight() {
     return weight;
   }
 
