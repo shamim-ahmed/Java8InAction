@@ -1,6 +1,7 @@
 package edu.buet.cse.ch05;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,8 +26,34 @@ public class PuttingIntoPractice {
             .sorted((t1, t2) -> Integer.compare(t1.getValue(), t2.getValue()))
             .collect(Collectors.toList());
     transaction2011List.forEach(System.out::println);
-    
+
     System.out.println();
 
+    // Query 2: What are all the unique cities where the traders work?
+    List<String> uniqueCityList = transactionList.stream().map(t -> t.getTrader().getCity())
+        .distinct().collect(Collectors.toList());
+    uniqueCityList.forEach(System.out::println);
+
+    System.out.println();
+
+    // Query 3: Find all traders from Cambridge and sort them by name.
+    List<Trader> cambridgeTraderList = transactionList.stream().map(Transaction::getTrader)
+        .filter(t -> t.getCity().equals("Cambridge")).distinct()
+        .sorted(Comparator.comparing(Trader::getName)).collect(Collectors.toList());
+    cambridgeTraderList.forEach(System.out::println);
+
+    System.out.println();
+
+    // Query 4: Return a string of all traders’ names sorted alphabetically.
+    String traderNameStr = transactionList.stream().map(t -> t.getTrader().getName()).distinct()
+        .sorted().reduce("", (s1, s2) -> s1 + " " + s2);
+    System.out.println("Trader names: " + traderNameStr);
+
+    System.out.println();
+
+    // Query 5: Is there any trader based in Milan?
+    boolean milanTraderExists = transactionList.stream().map(Transaction::getTrader)
+        .anyMatch(t -> t.getCity().equals("Milan"));
+    System.out.println("Is there any trader based in Milan? " + milanTraderExists);
   }
 }
