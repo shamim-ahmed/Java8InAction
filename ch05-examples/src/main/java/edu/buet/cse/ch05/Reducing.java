@@ -42,7 +42,5 @@ public class Reducing {
     // example 6
     int calories2 = Dish.menu.stream().mapToInt(Dish::getCalories).sum();
     System.out.println("Sum of calories: " + calories2);
-
-    System.out.println();
   }
 }

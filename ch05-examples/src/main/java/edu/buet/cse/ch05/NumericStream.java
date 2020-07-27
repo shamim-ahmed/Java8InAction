@@ -28,8 +28,6 @@ public class NumericStream {
 
     // example 4: max and OptionalInt
     OptionalInt maxCalories = Dish.menu.stream().mapToInt(Dish::getCalories).max();
-    maxCalories.ifPresent(n -> System.out.println("maximum calories = " + n));
-    
-    System.out.println();
+    maxCalories.ifPresent(n -> System.out.println("maximum calories = " + n));    
   }
 }

@@ -29,8 +29,6 @@ public class Filtering {
     System.out.println();
 
     // example 4: skipping elements
-    Dish.menu.stream().filter(d -> d.getCalories() > 300).skip(2).forEach(System.out::println);
-    
-    System.out.println();
+    Dish.menu.stream().filter(d -> d.getCalories() > 300).skip(2).forEach(System.out::println);    
   }
 }
