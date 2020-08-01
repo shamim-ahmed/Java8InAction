@@ -14,6 +14,7 @@ public class Grouping {
     System.out.println("Dishes grouped by type: " + groupDishesByType());
     System.out.println("Dish names grouped by type: " + groupDishNamesByType());
     System.out.println("Dish tags grouped by type: " + groupDishTagsByType());
+    System.out.println("High calorie dishes grouped by type:" + groupHighCalorieDishesByType());
   }
 
   private static Map<Dish.Type, List<Dish>> groupDishesByType() {
@@ -33,5 +34,10 @@ public class Grouping {
 
     return Dish.menu.stream().collect(
         Collectors.groupingBy(Dish::getType, Collectors.flatMapping(func, Collectors.toSet())));
+  }
+
+  private static Map<Dish.Type, List<Dish>> groupHighCalorieDishesByType() {
+    return Dish.menu.stream().collect(Collectors.groupingBy(Dish::getType,
+        Collectors.filtering(d -> d.getCalories() > 500, Collectors.toList())));
   }
 }
