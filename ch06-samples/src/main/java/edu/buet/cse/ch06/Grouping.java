@@ -10,11 +10,19 @@ import java.util.stream.Stream;
 import edu.buet.cse.ch06.model.Dish;
 
 public class Grouping {
+  enum CaloricLevel {
+    DIET, NORMAL, FAT
+  };
+
   public static void main(String... args) {
     System.out.println("Dishes grouped by type: " + groupDishesByType());
     System.out.println("Dish names grouped by type: " + groupDishNamesByType());
     System.out.println("Dish tags grouped by type: " + groupDishTagsByType());
     System.out.println("High calorie dishes grouped by type:" + groupHighCalorieDishesByType());
+    System.out.println("Dishes grouped by calorie level:" + groupDishesByCaloricLevel());
+    System.out
+        .println("Dishes grouped by type and calorie level:" + groupDishesByTypeAndCaloricLevel());
+    System.out.println("Dish count per type:" + countDishesPerType());
   }
 
   private static Map<Dish.Type, List<Dish>> groupDishesByType() {
@@ -39,5 +47,34 @@ public class Grouping {
   private static Map<Dish.Type, List<Dish>> groupHighCalorieDishesByType() {
     return Dish.menu.stream().collect(Collectors.groupingBy(Dish::getType,
         Collectors.filtering(d -> d.getCalories() > 500, Collectors.toList())));
+  }
+
+  private static Map<CaloricLevel, List<Dish>> groupDishesByCaloricLevel() {
+    return Dish.menu.stream().collect(Collectors.groupingBy((Dish dish) -> {
+      if (dish.getCalories() <= 400)
+        return CaloricLevel.DIET;
+
+      if (dish.getCalories() <= 700)
+        return CaloricLevel.NORMAL;
+
+      return CaloricLevel.FAT;
+    }));
+  }
+
+  private static Map<Dish.Type, Map<CaloricLevel, List<Dish>>> groupDishesByTypeAndCaloricLevel() {
+    return Dish.menu.stream()
+        .collect(Collectors.groupingBy(Dish::getType, Collectors.groupingBy((Dish dish) -> {
+          if (dish.getCalories() <= 400)
+            return CaloricLevel.DIET;
+
+          if (dish.getCalories() <= 700)
+            return CaloricLevel.NORMAL;
+
+          return CaloricLevel.FAT;
+        })));
+  }
+
+  private static Map<Dish.Type, Long> countDishesPerType() {
+    return Dish.menu.stream().collect(Collectors.groupingBy(Dish::getType, Collectors.counting()));
   }
 }
