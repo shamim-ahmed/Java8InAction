@@ -51,11 +51,13 @@ public class Grouping {
 
   private static Map<CaloricLevel, List<Dish>> groupDishesByCaloricLevel() {
     return Dish.menu.stream().collect(Collectors.groupingBy((Dish dish) -> {
-      if (dish.getCalories() <= 400)
+      if (dish.getCalories() <= 400) {
         return CaloricLevel.DIET;
+      }
 
-      if (dish.getCalories() <= 700)
+      if (dish.getCalories() <= 700) {
         return CaloricLevel.NORMAL;
+      }
 
       return CaloricLevel.FAT;
     }));
@@ -64,11 +66,13 @@ public class Grouping {
   private static Map<Dish.Type, Map<CaloricLevel, List<Dish>>> groupDishesByTypeAndCaloricLevel() {
     return Dish.menu.stream()
         .collect(Collectors.groupingBy(Dish::getType, Collectors.groupingBy((Dish dish) -> {
-          if (dish.getCalories() <= 400)
+          if (dish.getCalories() <= 400) {
             return CaloricLevel.DIET;
+          }
 
-          if (dish.getCalories() <= 700)
+          if (dish.getCalories() <= 700) {
             return CaloricLevel.NORMAL;
+          }
 
           return CaloricLevel.FAT;
         })));
