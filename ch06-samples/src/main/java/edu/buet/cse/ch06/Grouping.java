@@ -2,6 +2,7 @@ package edu.buet.cse.ch06;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -23,6 +24,9 @@ public class Grouping {
     System.out
         .println("Dishes grouped by type and calorie level:" + groupDishesByTypeAndCaloricLevel());
     System.out.println("Dish count per type:" + countDishesPerType());
+    System.out.println("Most caloric dish by type:" + mostCaloricDishByType());
+    System.out.println(
+        "Most caloric dish by type (without Optional):" + mostCaloricDishByTypeWithoutOptional());
   }
 
   private static Map<Dish.Type, List<Dish>> groupDishesByType() {
@@ -80,5 +84,19 @@ public class Grouping {
 
   private static Map<Dish.Type, Long> countDishesPerType() {
     return Dish.menu.stream().collect(Collectors.groupingBy(Dish::getType, Collectors.counting()));
+  }
+
+  private static Map<Dish.Type, Optional<Dish>> mostCaloricDishByType() {
+    return Dish.menu.stream().collect(Collectors.groupingBy(Dish::getType,
+        Collectors.reducing((Dish d1, Dish d2) -> d1.getCalories() > d2.getCalories() ? d1 : d2)));
+  }
+
+  private static Map<Dish.Type, Dish> mostCaloricDishByTypeWithoutOptional() {
+    return Dish.menu.stream()
+        .collect(Collectors.groupingBy(Dish::getType,
+            Collectors.collectingAndThen(
+                Collectors
+                    .reducing((Dish d1, Dish d2) -> d1.getCalories() > d2.getCalories() ? d1 : d2),
+                Optional::get)));
   }
 }
