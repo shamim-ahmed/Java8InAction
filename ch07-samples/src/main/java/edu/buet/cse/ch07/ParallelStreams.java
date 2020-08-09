@@ -3,17 +3,6 @@ package edu.buet.cse.ch07;
 import java.util.stream.LongStream;
 
 public class ParallelStreams {
-  public static void main(String... args) {
-    System.out.println("Iterative sum: " + iterativeSum(100L));
-    System.out.println("Sequential sum: " + sequentialSum(100L));
-    System.out.println("Sequential sum: " + sequentialSum2(100L));
-    System.out.println("Parallel sum: " + parallelSum(100L));
-    System.out.println("Ranged sum: " + rangedSum(100L));
-    System.out.println("Parallel ranged sum: " + parallelRangedSum(100L));
-    System.out.println("Side effect sum (sequential): " + sideEffectSum(100L));
-    System.out.println("Side effect sum (parallel): " + sideEffectSumParallel(100L));
-  }
-
   public static long iterativeSum(long n) {
     long result = 0L;
 
